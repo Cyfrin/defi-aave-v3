@@ -11,8 +11,7 @@ contract Liquidate {
 
     // Task 1 - Liquidate an under-collateralized loan
     function liquidate(address collateral, address borrowedToken, address user)
-        public
-    {
+        public {
         // Task 1.1 - Get the amount of borrowed token that the user owes to Aave V3
 
         // Task 1.2 - Transfer the full borrowed amount from msg.sender

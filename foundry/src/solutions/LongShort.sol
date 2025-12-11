@@ -30,14 +30,12 @@ contract LongShort is Aave, Swap {
         require(params.minHealthFactor > 1e18, "min health factor <= 1");
 
         // Transfer collateral
-        IERC20(params.collateralToken).transferFrom(
-            msg.sender, address(this), params.collateralAmount
-        );
+        IERC20(params.collateralToken)
+            .transferFrom(msg.sender, address(this), params.collateralAmount);
 
         // Supply collateral
-        IERC20(params.collateralToken).approve(
-            address(pool), params.collateralAmount
-        );
+        IERC20(params.collateralToken)
+            .approve(address(pool), params.collateralAmount);
         supply(params.collateralToken, params.collateralAmount, msg.sender);
 
         // Borrow token
@@ -83,14 +81,12 @@ contract LongShort is Aave, Swap {
         )
     {
         // Transfer collateral
-        IERC20(params.collateralToken).transferFrom(
-            msg.sender, address(this), params.collateralAmount
-        );
+        IERC20(params.collateralToken)
+            .transferFrom(msg.sender, address(this), params.collateralAmount);
 
         // Swap collateral to borrowed token
-        IERC20(params.collateralToken).approve(
-            address(router), params.collateralAmount
-        );
+        IERC20(params.collateralToken)
+            .approve(address(router), params.collateralAmount);
         uint256 amountOut = swap({
             tokenIn: params.collateralToken,
             tokenOut: params.borrowToken,
@@ -110,9 +106,8 @@ contract LongShort is Aave, Swap {
         if (debtToRepay > amountOut) {
             // msg.sender repays for the difference
             repayAmount = debtToRepay - amountOut;
-            IERC20(params.borrowToken).transferFrom(
-                msg.sender, address(this), repayAmount
-            );
+            IERC20(params.borrowToken)
+                .transferFrom(msg.sender, address(this), repayAmount);
         }
         repay(params.borrowToken, debtToRepay, msg.sender);
 

@@ -11,8 +11,9 @@ import {
     UNISWAP_V3_POOL_FEE_DAI_WETH
 } from "../src/Constants.sol";
 import {IPool} from "../src/interfaces/aave-v3/IPool.sol";
-import {IVariableDebtToken} from
-    "../src/interfaces/aave-v3/IVariableDebtToken.sol";
+import {
+    IVariableDebtToken
+} from "../src/interfaces/aave-v3/IVariableDebtToken.sol";
 import {IAaveOracle} from "../src/interfaces/aave-v3/IAaveOracle.sol";
 import {LongShort} from "@exercises/LongShort.sol";
 
@@ -103,8 +104,9 @@ contract LongShortTest is Test {
         console.log("Debt repaid from msg.sender : %e", debtRepaidFromMsgSender);
         console.log("Borrowed leftover: %e", borrowedLeftover);
 
-        assertGe(balsAfter[0], collateralAmount, "WETH balance");
-        assertGe(collateralWithdrawn, collateralAmount, "WETH withdrawn");
+        // Accounting for Aave rounding down
+        assertGe(balsAfter[0], collateralAmount - 1, "WETH balance");
+        assertGe(collateralWithdrawn, collateralAmount - 1, "WETH withdrawn");
         assertEq(
             balsAfter[1],
             balsBefore[1] - debtRepaidFromMsgSender + borrowedLeftover,
@@ -188,8 +190,9 @@ contract LongShortTest is Test {
         console.log("Debt repaid from msg.sender : %e", debtRepaidFromMsgSender);
         console.log("Borrowed leftover: %e", borrowedLeftover);
 
-        assertGe(balsAfter[0], collateralAmount, "DAI balance");
-        assertGe(collateralWithdrawn, collateralAmount, "DAI withdrawn");
+        // Accounting for Aave rounding down
+        assertGe(balsAfter[0], collateralAmount - 1, "DAI balance");
+        assertGe(collateralWithdrawn, collateralAmount - 1, "DAI withdrawn");
         assertEq(
             balsAfter[1],
             balsBefore[1] - debtRepaidFromMsgSender + borrowedLeftover,
